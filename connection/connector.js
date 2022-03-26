@@ -6,8 +6,9 @@ import Web3 from 'web3';
 export const load = async () => {
     await loadWeb3();
     const accountAddress = await loadAccount();
-    const {todoContract, tasks} = await loadContract(accountAddress);
-    return {accountAddress, todoContract, tasks}
+    const {todoContract, tasks, tasksCount} = await loadContract(accountAddress);
+    return {accountAddress, todoContract, tasks, tasksCount}
+    // return {accountAddress}
 }
 
 
@@ -17,7 +18,7 @@ const loadAccount = async () => {
 }
 
 const loadTasks = async (contract, accountAddress) => {
-    const tasksCount = await contract.tasksCount(accountAddress);
+    const tasksCount = await contract.taskCount(accountAddress);
     const tasks = [];
 
     for(let i=0;i<tasksCount;i++){
@@ -25,7 +26,7 @@ const loadTasks = async (contract, accountAddress) => {
         tasks.push(task);
     }
 
-    return tasks;
+    return {tasksCount, tasks};
 }
 
 const loadContract = async (accountAddress) => {
@@ -33,9 +34,9 @@ const loadContract = async (accountAddress) => {
     theContract.setProvider(web3.eth.currentProvider);
 
     const todoContract = await theContract.deployed();
-    const tasks = await loadTasks(todoContract, accountAddress);
+    const {tasksCount, tasks} = await loadTasks(todoContract, accountAddress);
 
-    return {todoContract, tasks}
+    return {todoContract, tasks, tasksCount}
 }
 
 const loadWeb3 = async () => {
