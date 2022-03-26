@@ -78,10 +78,10 @@ const TodoList: React.FunctionComponent = () => {
                 tasks == null ? <div className="flex justify-center">loading tasks...</div> :
                 <>
                     <ul className='mt-3'>{
-                        tasks.map((task,idx) => task[2] === false &&
+                        tasks.map((task,idx) =>
                             <li key={idx} className='border border-green-700 flex flex-col mx-3 my-2 rounded p-3 bg-white drop-shadow-sm hover:drop-shadow-lg'>
                                 <div className='flex flex-row'>
-                                    <span className='font-bold flex-grow'>{task[1]}</span> 
+                                    <span className='font-bold flex-grow'>{task[2]? <p className='line-through'>{task[1]}</p> : <p>{task[1]}</p>}</span> 
                                     <input type="checkbox" className='appearance indeterminate:bg-gray-300 text-lg'
                                         onChange={() => handleToggleCompleted(idx)}
                                         checked={task[2]}
@@ -95,25 +95,7 @@ const TodoList: React.FunctionComponent = () => {
                             </li>
                         )
                     }</ul>
-                    
-                    <ul className='mt-3'>{
-                        tasks.map((task,idx) => task[2] === true &&
-                            <li key={idx} className='border border-green-700 flex flex-col mx-3 my-2 rounded p-3 bg-white drop-shadow-sm hover:drop-shadow-lg'>
-                                <div className='flex flex-row'>
-                                    <span className='font-bold flex-grow'>{task[1]}</span> 
-                                    <input type="checkbox" className='appearance indeterminate:bg-gray-300 text-lg'
-                                        onChange={() => handleToggleCompleted(idx)}
-                                        checked={task[2]}
-                                    />
-                                    {/* {console.log(task[2])} */}
-                                </div>
-                                <div className='flex justify-between mt-3'>
-                                    <button className='bg-yellow-500 text-white px-2 py-1 rounded font-medium text-sm'>UPDATE</button>
-                                    <button className='bg-red-500 text-white px-2 py-1 rounded font-medium text-sm'>DELETE</button>
-                                </div>
-                            </li>
-                        )
-                    }</ul>
+
                 </>
             }
         </div>
