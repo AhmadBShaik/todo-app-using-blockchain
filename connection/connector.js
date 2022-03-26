@@ -3,7 +3,6 @@ import TodoListJSON from '../build/contracts/TodoList.json';
 const contract = require('@truffle/contract')
 import Web3 from 'web3';
 
-
 export const load = async () => {
     await loadWeb3();
     const accountAddress = await loadAccount();
